@@ -1,0 +1,25 @@
+{
+  "name": "sportz",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=19"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node src/scripts/migrate.js",
+    "db:seed": "node src/scripts/seed.js",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.44.2",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.4"
+  }
+}
