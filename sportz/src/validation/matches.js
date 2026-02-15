@@ -1,16 +1,5 @@
 import { z } from 'zod';
 
-const isValidIsoDateString = (value) => {
-  const isoDateTimePattern =
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/;
-
-  if (!isoDateTimePattern.test(value)) {
-    return false;
-  }
-
-  return !Number.isNaN(new Date(value).getTime());
-};
-
 export const listMatchesQuerySchema = z.object({
   limit: z.coerce.number().int().positive().max(100).optional(),
 });
@@ -30,12 +19,8 @@ export const createMatchSchema = z
     sport: z.string().trim().min(1),
     homeTeam: z.string().trim().min(1),
     awayTeam: z.string().trim().min(1),
-    startTime: z.string().refine(isValidIsoDateString, {
-      message: 'startTime must be a valid ISO date string',
-    }),
-    endTime: z.string().refine(isValidIsoDateString, {
-      message: 'endTime must be a valid ISO date string',
-    }),
+    startTime: z.iso.datetime(),
+    endTime: z.iso.datetime(),
     homeScore: z.coerce.number().int().nonnegative().optional(),
     awayScore: z.coerce.number().int().nonnegative().optional(),
   })
