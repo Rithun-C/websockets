@@ -3,6 +3,7 @@ import http from 'http';
 import { sql } from './db/index.js';
 import { matchRouter } from './routes/matches.js';
 import { attachWsServer } from './ws/server.js';
+import { securityMiddleware } from './arcjet.js';
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   res.send('Sportz server is running');
 });
 
+app.use(securityMiddleware());
 app.use('/matches', matchRouter)
 const {broadcastMatchCreated} = attachWsServer(server);
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
